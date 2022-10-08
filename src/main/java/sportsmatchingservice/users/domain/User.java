@@ -36,7 +36,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Setter
     @Column(nullable = false, insertable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
