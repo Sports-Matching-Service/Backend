@@ -15,7 +15,10 @@ spring:
     password:
 
 jwt:
-  key:
-    secret: ${JWT_SECRET_KEY}
+  secret-key: sports-matching-service-secret-key
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+
+mail:
+  address:
+    admin: admin@gmail.com

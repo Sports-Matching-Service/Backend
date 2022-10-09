@@ -2,7 +2,6 @@ package sportsmatchingservice.exceptions;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiErrorResponse;
 import sportsmatchingservice.exceptions.exception.DuplicatedDataException;
 import sportsmatchingservice.exceptions.exception.GeneralException;
