@@ -4,7 +4,6 @@ package sportsmatchingservice.users.dto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import sportsmatchingservice.users.domain.User;
 
 import javax.validation.constraints.Email;

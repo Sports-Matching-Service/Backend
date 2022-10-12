@@ -8,9 +8,6 @@ import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.users.dto.UserPostDto;
 import sportsmatchingservice.users.service.UserService;
 
-import javax.websocket.server.PathParam;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

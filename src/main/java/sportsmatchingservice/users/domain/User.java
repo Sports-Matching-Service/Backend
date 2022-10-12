@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -47,6 +49,9 @@ public class User {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    @Setter
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
     protected User(String email, String nickname, String phoneNumber, String password) {
         this.email = email;
