@@ -1,7 +1,7 @@
-package sportsmatchingservice.users.repository;
+package sportsmatchingservice.auth.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sportsmatchingservice.users.domain.User;
+import sportsmatchingservice.auth.domain.User;
 
 import java.util.Optional;
 

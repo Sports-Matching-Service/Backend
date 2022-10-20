@@ -11,7 +11,7 @@ import sportsmatchingservice.auth.jwt.JwtTokenizer;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.exceptions.exception.GeneralException;
-import sportsmatchingservice.users.domain.User;
+import sportsmatchingservice.auth.domain.User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;

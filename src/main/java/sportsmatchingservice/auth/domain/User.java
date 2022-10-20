@@ -1,4 +1,4 @@
-package sportsmatchingservice.users.domain;
+package sportsmatchingservice.auth.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
