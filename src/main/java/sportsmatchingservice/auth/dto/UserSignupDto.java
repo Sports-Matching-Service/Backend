@@ -1,17 +1,16 @@
-package sportsmatchingservice.users.dto;
-
+package sportsmatchingservice.auth.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sportsmatchingservice.users.domain.User;
+import sportsmatchingservice.auth.domain.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserPostDto {
+public class UserSignupDto {
 
     @NotBlank(message = "이메일을 작성해주세요.")
     @Email(message = "이메일 형식에 맞게 작성해주세요.")
@@ -35,8 +34,8 @@ public class UserPostDto {
         );
     }
 
-    public static UserPostDto of(User user){
-        return new UserPostDto(
+    public static UserSignupDto of(User user){
+        return new UserSignupDto(
                 user.getEmail(),
                 user.getPassword(),
                 user.getNickname(),
