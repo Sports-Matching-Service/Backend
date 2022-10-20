@@ -1,4 +1,4 @@
-package sportsmatchingservice.users.domain;
+package sportsmatchingservice.auth.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +35,13 @@ public class User {
     private String phoneNumber;
 
     @Setter
-    @Column(nullable = false)
+    @Column
     private String password;
+
+    @Setter
+    @Column(nullable=false,
+            columnDefinition = "boolean default false")
+    private boolean isOauth;
 
     @Column(nullable = false, insertable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import sportsmatchingservice.auth.utils.CustomAuthorityUtils;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.exceptions.exception.GeneralException;
-import sportsmatchingservice.users.domain.User;
-import sportsmatchingservice.users.repository.UserRepository;
+import sportsmatchingservice.auth.domain.User;
+import sportsmatchingservice.auth.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Optional;
