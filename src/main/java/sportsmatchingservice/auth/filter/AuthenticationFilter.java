@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import sportsmatchingservice.auth.dto.LoginDto;
 import sportsmatchingservice.auth.jwt.JwtTokenizer;
 import sportsmatchingservice.constant.ErrorCode;
-import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.exceptions.exception.GeneralException;
 import sportsmatchingservice.auth.domain.User;
 
@@ -60,7 +59,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             response.setHeader("Authorization", "Bearer" + accessToken);
             response.setHeader("Refresh", refreshToken);
 
-            response.getWriter().write(objectMapper.writeValueAsString(ApiDataResponse.of(ErrorCode.OK, true)));
+            this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.INTERNAL_ERROR, e);
