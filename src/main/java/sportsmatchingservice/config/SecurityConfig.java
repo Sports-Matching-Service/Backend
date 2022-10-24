@@ -14,13 +14,16 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import sportsmatchingservice.auth.filter.AuthenticationFilter;
 import sportsmatchingservice.auth.filter.JwtVerificationFilter;
+import sportsmatchingservice.auth.handler.UserAccessDeniedHandler;
+import sportsmatchingservice.auth.handler.UserAuthenticationEntryPoint;
+import sportsmatchingservice.auth.handler.UserAuthenticationFailureHandler;
+import sportsmatchingservice.auth.handler.UserAuthenticationSuccessHandler;
 import sportsmatchingservice.auth.jwt.JwtTokenizer;
 import sportsmatchingservice.auth.utils.CustomAuthorityUtils;
 
 import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
 
 @Configuration
 public class SecurityConfig {
@@ -44,10 +47,15 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                .accessDeniedHandler(new UserAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll());
+
         return http.build();
     }
 
@@ -80,7 +88,7 @@ public class SecurityConfig {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder.addFilter(authenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtVerificationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, AuthenticationFilter.class);
         }
     }
 }
