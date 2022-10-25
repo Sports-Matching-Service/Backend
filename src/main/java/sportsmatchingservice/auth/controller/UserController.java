@@ -8,7 +8,7 @@ import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.auth.service.UserService;
 
-
+@RequestMapping("/users")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
+    @PostMapping
     public ApiDataResponse signup(@RequestBody UserSignupDto userSignupDto) {
         boolean result = userService.createUser(userSignupDto);
         if (result == true) {
