@@ -57,7 +57,7 @@ public class OauthKakaoService {
     private String userInfoUrl;
 
     @Getter
-    @Value("${social.kakao.path.tokenUrl")
+    @Value("${social.kakao.path.tokenUrl}")
     private String tokenUrl;
 
 
