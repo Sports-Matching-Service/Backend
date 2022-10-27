@@ -128,23 +128,23 @@ public class OauthKakaoService {
         if (optional.isPresent()) {
             User user = optional.get();
             UserTokenDto userTokenDto = UserTokenDto.of(user);
-            setTokens(user, userTokenDto);
+            setTokens(userTokenDto);
             return userTokenDto;
         } else {
             User user = userInfoOauthDto.toEntity();
             List<String> roles = authorityUtils.createRoles(user.getEmail());
             user.setRoles(roles);
             UserTokenDto userTokenDto = UserTokenDto.of(userRepository.save(user));
-            setTokens(user, userTokenDto);
+            setTokens(userTokenDto);
             return userTokenDto;
         }
     }
 
-    protected void setTokens(User user, UserTokenDto userTokenDto) {
+    protected void setTokens(UserTokenDto userTokenDto) {
         Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("username", user.getEmail());
-        claims.put("roles", user.getRoles());
-        String subject = user.getEmail();
+        claims.put("username", userTokenDto.getEmail());
+        claims.put("roles", userTokenDto.getRoles());
+        String subject = userTokenDto.getEmail();
         Date accessTokenExpiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         Date refreshTokenExpiration= jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
