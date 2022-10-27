@@ -22,3 +22,14 @@ jwt:
 mail:
   address:
     admin: admin@gmail.com
+
+social:
+  kakao:
+    params:
+      clientId: 22b97acad5abe9c20aa6d5b4740fccb4
+      clientSecret: 7Qz7wEYSkZDetbVFlny97RJ3oXvOgCNj
+    path:
+      redirectUri: http://localhost:8080/users/oauth/tokens/kakao
+      userInfoUrl : https://kapi.kakao.com/v2/user/me
+      tokenUrl: https://kauth.kakao.com/oauth/token
+
