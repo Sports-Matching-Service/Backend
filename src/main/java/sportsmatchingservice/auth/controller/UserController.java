@@ -10,7 +10,7 @@ import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.auth.service.UserService;
 
-
+@RequestMapping("/users")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -20,7 +20,7 @@ public class UserController {
     private final OauthKakaoService oauthKakaoService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
+    @PostMapping
     public ApiDataResponse signup(@RequestBody UserSignupDto userSignupDto) {
         boolean result = userService.createUser(userSignupDto);
         if (result == true) {
