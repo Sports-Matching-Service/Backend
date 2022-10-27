@@ -1,5 +1,7 @@
 package sportsmatchingservice.auth.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import sportsmatchingservice.auth.dto.OauthTokenDto;
+import sportsmatchingservice.auth.dto.UserInfoOauthDto;
 
 import java.util.*;
 
@@ -77,5 +80,30 @@ public class OauthKakaoService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public UserInfoOauthDto getUserInfo(String accessToken)  {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+accessToken);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        String response = restTemplate
+                .postForEntity(getUserInfoUrl(), request, String.class).getBody();
+
+        try {
+            JsonNode jsonNode = objectMapper.readTree(String.valueOf(response));
+            String email = String.valueOf(jsonNode.get("kakao_account").get("email").asText());
+            String nickname = String.valueOf(jsonNode.get("kakao_account").get("profile").get("nickname").asText());
+//            String phoneNumber = String.valueOf(jsonNode.get("kakao_account").get("phone_number").asText());
+
+            return UserInfoOauthDto.of(email, nickname);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return UserInfoOauthDto.of();
     }
 }
