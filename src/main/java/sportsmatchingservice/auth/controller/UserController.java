@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sportsmatchingservice.auth.dto.UserSignupDto;
+import sportsmatchingservice.auth.dto.UserTokenDto;
 import sportsmatchingservice.auth.service.OauthKakaoService;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
@@ -33,6 +34,16 @@ public class UserController {
     public ApiDataResponse getOauthParams(@PathVariable("social") String social) {
         if (social.equals("kakao")){
             return ApiDataResponse.of(ErrorCode.OK, oauthKakaoService.getParameters());
+        } else {
+            return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, null);
+        }
+    }
+
+    @RequestMapping("/oauth/tokens/{social}")
+    public ApiDataResponse getUserTokenDto(@PathVariable("social") String social,String code) {
+        if (social.equals("kakao")) {
+            UserTokenDto userTokenDto = oauthKakaoService.getUserToken(code);
+            return ApiDataResponse.of(ErrorCode.OK, userTokenDto);
         } else {
             return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, null);
         }

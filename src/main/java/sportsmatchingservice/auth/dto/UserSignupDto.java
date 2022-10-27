@@ -3,6 +3,7 @@ package sportsmatchingservice.auth.dto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import sportsmatchingservice.auth.domain.User;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class UserSignupDto {
 
     @NotBlank(message = "이메일을 작성해주세요.")

@@ -12,18 +12,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.auth.dto.OauthTokenDto;
 import sportsmatchingservice.auth.dto.UserInfoOauthDto;
+import sportsmatchingservice.auth.dto.UserTokenDto;
+import sportsmatchingservice.auth.jwt.JwtTokenizer;
+import sportsmatchingservice.auth.repository.UserRepository;
+import sportsmatchingservice.auth.utils.CustomAuthorityUtils;
 
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class OauthKakaoService {
+
+    private final UserRepository userRepository;
+    private final CustomAuthorityUtils authorityUtils;
+    private final JwtTokenizer jwtTokenizer;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -106,4 +115,44 @@ public class OauthKakaoService {
 
         return UserInfoOauthDto.of();
     }
+
+    @Transactional
+    public UserTokenDto getUserToken(String authorizationCode){
+        String kakaoAccessToken = "";
+
+        kakaoAccessToken = getAccessToken(authorizationCode);
+        UserInfoOauthDto userInfoOauthDto = getUserInfo(kakaoAccessToken);
+        Optional<User> optional = userRepository.findByEmail(
+                userInfoOauthDto.getEmail());
+
+        if (optional.isPresent()) {
+            User user = optional.get();
+            UserTokenDto userTokenDto = UserTokenDto.of(user);
+            setTokens(user, userTokenDto);
+            return userTokenDto;
+        } else {
+            User user = userInfoOauthDto.toEntity();
+            List<String> roles = authorityUtils.createRoles(user.getEmail());
+            user.setRoles(roles);
+            UserTokenDto userTokenDto = UserTokenDto.of(userRepository.save(user));
+            setTokens(user, userTokenDto);
+            return userTokenDto;
+        }
+    }
+
+    protected void setTokens(User user, UserTokenDto userTokenDto) {
+        Map<String, Object> claims = new HashMap<String, Object>();
+        claims.put("username", user.getEmail());
+        claims.put("roles", user.getRoles());
+        String subject = user.getEmail();
+        Date accessTokenExpiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date refreshTokenExpiration= jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, accessTokenExpiration, base64EncodedSecretKey);
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject, refreshTokenExpiration, base64EncodedSecretKey);
+
+        userTokenDto.setAccessToken(accessToken);
+        userTokenDto.setRefreshToken(refreshToken);
+    }
+
 }
