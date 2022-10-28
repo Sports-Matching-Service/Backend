@@ -31,7 +31,7 @@ public class User {
     private String nickname;
 
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column
     private String phoneNumber;
 
     @Setter
@@ -65,6 +65,13 @@ public class User {
         this.password = password;
     }
 
+    protected User(String email, String nickname, String phoneNumber) {
+        this.email = email;
+        this.nickname = nickname;
+        this.phoneNumber = phoneNumber;
+        this.isOauth = true;
+    }
+
     public static User of(
             String email,
             String nickname,
@@ -72,6 +79,14 @@ public class User {
             String password
     ) {
         return new User(email, nickname, phoneNumber, password);
+    }
+
+    public static User of(
+            String email,
+            String nickname,
+            String phoneNumber
+    ) {
+        return new User(email,nickname, phoneNumber);
     }
 
 }
