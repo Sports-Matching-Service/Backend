@@ -122,6 +122,39 @@ public class OauthNaverService {
         return response;
     }
 
+    public UserTokenDto setUserTokenDto(UserInfoOauthDto userInfoOauthDto) {
+        Optional<User> optionalUser = userRepository.findByEmail(userInfoOauthDto.getEmail());
+        User user;
+
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        } else {
+            user = userInfoOauthDto.toEntity();
+            user.setRoles(authorityUtils.createRoles(user.getEmail()));
+            userRepository.save(user);
+        }
+
+        UserTokenDto userTokenDto = UserTokenDto.of(user);
+        setTokens(userTokenDto);
+        return userTokenDto;
+    }
+
+    public void setTokens(UserTokenDto userTokenDto) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", userTokenDto.getEmail());
+        claims.put("roles", userTokenDto.getRoles());
+
+        String subject = userTokenDto.getEmail();
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        Date accessTokenExpiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date refreshTokenExpiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
+
+        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, accessTokenExpiration, base64EncodedSecretKey);
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject, refreshTokenExpiration, base64EncodedSecretKey);
+
+        userTokenDto.setAccessToken(accessToken);
+        userTokenDto.setRefreshToken(refreshToken);
+    }
 
     public String generateState() {
         SecureRandom random = new SecureRandom();
