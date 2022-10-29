@@ -1,5 +1,8 @@
 package sportsmatchingservice.auth.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +15,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.auth.dto.OauthTokenDto;
+import sportsmatchingservice.auth.dto.UserInfoOauthDto;
+import sportsmatchingservice.auth.dto.UserTokenDto;
 import sportsmatchingservice.auth.jwt.JwtTokenizer;
 import sportsmatchingservice.auth.repository.UserRepository;
 import sportsmatchingservice.auth.utils.CustomAuthorityUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OauthNaverService {
@@ -57,6 +66,13 @@ public class OauthNaverService {
         this.userRepository = userRepository;
         this.authorityUtils = authorityUtils;
         this.jwtTokenizer = jwtTokenizer;
+    }
+
+    public UserTokenDto getUserToken(String code, String state) {
+        String accessToken = getAccessToken(code, state);
+        UserInfoOauthDto userInfoOauthDto = getUserInfo(accessToken);
+
+        return setUserTokenDto(userInfoOauthDto);
     }
 
     public HashMap<String, String> getParameters() {
