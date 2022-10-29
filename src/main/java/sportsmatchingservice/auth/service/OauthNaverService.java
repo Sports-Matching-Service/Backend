@@ -90,6 +90,38 @@ public class OauthNaverService {
         return null;
     }
 
+    public UserInfoOauthDto getUserInfo(String accessToken) {
+        String response = requestUserInfo(accessToken);
+
+        try {
+            JsonNode jsonNode = objectMapper.readTree(response);
+
+            String email = jsonNode.get("response").get("email").asText();
+            String nickname = jsonNode.get("response").get("nickname").asText();
+            String phoneNumber = jsonNode.get("response").get("mobile").asText();
+
+            return UserInfoOauthDto.of(email, nickname, phoneNumber);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return UserInfoOauthDto.of();
+    }
+
+    public String requestUserInfo(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        String response = restTemplate.postForEntity(getUserInfoUrl(), request, String.class).getBody();
+
+        return response;
+    }
+
 
     public String generateState() {
         SecureRandom random = new SecureRandom();
