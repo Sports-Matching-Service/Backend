@@ -30,10 +30,17 @@ mail:
 social:
   kakao:
     params:
-      clientId: 22b97acad5abe9c20aa6d5b4740fccb4
-      clientSecret: 7Qz7wEYSkZDetbVFlny97RJ3oXvOgCNj
+      clientId: ${kakao-client-id}
+      clientSecret: ${kakao-client-secret}
     path:
       redirectUri: http://localhost:8080/users/oauth/tokens/kakao
       userInfoUrl : https://kapi.kakao.com/v2/user/me
       tokenUrl: https://kauth.kakao.com/oauth/token
-
+  naver:
+    params:
+      clientId: ${naver-client-id}
+      clientSecret: ${naver-client-secret}
+    path:
+      redirectUri: http://localhost:8080/users/oauth/tokens/naver
+      userInfoUrl: https://openapi.naver.com/v1/nid/me
+      tokenUrl: https://nid.naver.com/oauth2.0/token
