@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import sportsmatchingservice.constant.ErrorCode;
-import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.constant.dto.ApiErrorResponse;
 
 import javax.servlet.ServletException;

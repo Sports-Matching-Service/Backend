@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -42,7 +41,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         userInfo.put("nickname", user.getNickname());
         userInfo.put("id", user.getId());
         userInfo.put("roles", user.getRoles());
-        userInfo.put("access_token", "Bearer" + accessToken);
+        userInfo.put("access_token", "Bearer " + accessToken);
         userInfo.put("refresh_token", refreshToken);
 
         ApiDataResponse dataResponse = ApiDataResponse.of(ErrorCode.OK, userInfo);
