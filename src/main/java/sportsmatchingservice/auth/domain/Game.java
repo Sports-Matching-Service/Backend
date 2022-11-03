@@ -2,6 +2,7 @@ package sportsmatchingservice.auth.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
 
@@ -52,7 +53,9 @@ public class Game {
     @Column(nullable = false)
     private int fee;
 
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false,
+            columnDefinition = "datetime default CURRENT_TIMESTAMP")
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column
@@ -79,14 +82,20 @@ public class Game {
     }
 
     public static Game of(Sport sport,
-                   LocalDateTime startDateTime,
-                   LocalDateTime endDateTime,
-                   String address,
-                   int recruitment,
-                   int minRecruitment,
-                   int fee,
-                   Gender gender) {
-        return new Game(sport, startDateTime, endDateTime, address, recruitment, minRecruitment, fee, gender);
+                          LocalDateTime startDateTime,
+                          LocalDateTime endDateTime,
+                          String address,
+                          String addressDetail,
+                          int recruitment,
+                          int minRecruitment,
+                          int fee,
+                          Gender gender) {
+
+        Game game = new Game(sport, startDateTime, endDateTime, address, recruitment, minRecruitment, fee, gender);
+
+        if (addressDetail != null) game.setAddressDetail(addressDetail);
+
+        return game;
     }
 }
 
