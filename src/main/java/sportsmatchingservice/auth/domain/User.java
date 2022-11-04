@@ -58,6 +58,9 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "host")
+    private List<Game> games = new ArrayList<>();
+
     protected User(String email, String nickname, String phoneNumber, String password) {
         this.email = email;
         this.nickname = nickname;

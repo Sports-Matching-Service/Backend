@@ -27,7 +27,7 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ApiErrorResponse errorResponse = ApiErrorResponse.of(ErrorCode.UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(gson.toJson(errorResponse, ErrorCode.class));
+        response.getWriter().write(gson.toJson(errorResponse, ApiErrorResponse.class));
 
         logExceptionMessage(authException, exception);
     }

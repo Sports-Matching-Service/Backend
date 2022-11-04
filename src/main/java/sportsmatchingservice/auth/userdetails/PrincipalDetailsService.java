@@ -42,7 +42,6 @@ public class PrincipalDetailsService implements UserDetailsService {
 
 
         @Override
-
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return authorityUtils.createAuthorities(this.getRoles());
         }
