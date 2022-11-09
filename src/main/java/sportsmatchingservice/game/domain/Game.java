@@ -1,5 +1,6 @@
 package sportsmatchingservice.game.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Game {
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "HOST_ID")
+    @JsonBackReference
     private User host;
 
     @Enumerated(value = EnumType.STRING)

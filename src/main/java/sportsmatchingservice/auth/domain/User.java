@@ -1,5 +1,6 @@
 package sportsmatchingservice.auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -60,6 +61,7 @@ public class User {
     private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "host")
+    @JsonManagedReference
     private List<Game> games = new ArrayList<>();
 
     protected User(String email, String nickname, String phoneNumber, String password) {
