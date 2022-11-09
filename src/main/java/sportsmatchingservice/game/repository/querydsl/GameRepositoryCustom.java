@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface GameRepositoryCustom {
 
-    List<Game> findBySearchParams(Sport sport, Gender gender, LocalDate gameDate);
+    List<Game> findValidGamesBySearchParams(Sport sport, Gender gender, LocalDate gameDate);
 }

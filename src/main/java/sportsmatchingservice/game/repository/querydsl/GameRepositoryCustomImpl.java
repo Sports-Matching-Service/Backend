@@ -22,7 +22,7 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
 
 
     @Override
-    public List<Game> findBySearchParams(
+    public List<Game> findValidGamesBySearchParams(
             Sport sport,
             Gender gender,
             LocalDate gameDate

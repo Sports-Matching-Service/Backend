@@ -48,7 +48,7 @@ public class GameService {
 
     public List<GameResponseDto> getValidGamesFilteredBy(Sport sport, Gender gender, LocalDate gameDate){
 
-        List<GameResponseDto> gameResponseDtos = gameRepository.findBySearchParams(sport, gender, gameDate)
+        List<GameResponseDto> gameResponseDtos = gameRepository.findValidGamesBySearchParams(sport, gender, gameDate)
                 .stream()
                 .map(game -> GameResponseDto.of(game))
                 .collect(Collectors.toList());
