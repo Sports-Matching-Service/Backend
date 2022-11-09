@@ -1,10 +1,10 @@
-package sportsmatchingservice.auth.controller;
+package sportsmatchingservice.game.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import sportsmatchingservice.auth.dto.GamePostDto;
-import sportsmatchingservice.auth.service.GameService;
+import sportsmatchingservice.game.dto.GamePostDto;
+import sportsmatchingservice.game.service.GameService;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
 
@@ -30,4 +30,6 @@ public class GameController {
 
         return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, null);
     }
+
 }
+

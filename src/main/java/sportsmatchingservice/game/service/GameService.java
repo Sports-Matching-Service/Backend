@@ -1,12 +1,12 @@
-package sportsmatchingservice.auth.service;
+package sportsmatchingservice.game.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sportsmatchingservice.auth.domain.Game;
+import sportsmatchingservice.game.domain.Game;
 import sportsmatchingservice.auth.domain.User;
-import sportsmatchingservice.auth.dto.GamePostDto;
-import sportsmatchingservice.auth.repository.GameRepository;
+import sportsmatchingservice.game.dto.GamePostDto;
+import sportsmatchingservice.game.repository.GameRepository;
 import sportsmatchingservice.auth.repository.UserRepository;
 
 import java.util.Optional;
@@ -39,4 +39,5 @@ public class GameService {
 
         return true;
     }
+    
 }

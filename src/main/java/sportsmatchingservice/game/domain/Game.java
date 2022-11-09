@@ -1,8 +1,11 @@
-package sportsmatchingservice.auth.domain;
+package sportsmatchingservice.game.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
 
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 public class Game {
 
     @Id
@@ -97,5 +101,7 @@ public class Game {
 
         return game;
     }
+
+
 }
 
