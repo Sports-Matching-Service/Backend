@@ -9,6 +9,8 @@ import sportsmatchingservice.constant.Sport;
 import sportsmatchingservice.game.domain.Game;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import static sportsmatchingservice.game.domain.QGame.game;
@@ -35,12 +37,18 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
         if (gender != null) {
             builder.and(game.gender.eq(gender));
         }
+        if (gameDate != null) {
+            builder.and(game.startDateTime.between(
+                    gameDate.atStartOfDay(),
+                    gameDate.plusDays(1).atStartOfDay()));
+        } else {
+            builder.and(game.startDateTime.after(
+                    LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
+        }
 
-        List<Game> games =  query.selectFrom(game)
+        return query.selectFrom(game)
                 .where(builder)
                 .fetch();
-
-        return games;
     }
 
 }
