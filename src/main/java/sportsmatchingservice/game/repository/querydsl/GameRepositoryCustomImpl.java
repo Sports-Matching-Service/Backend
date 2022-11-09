@@ -48,6 +48,7 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
 
         return query.selectFrom(game)
                 .where(builder)
+                .orderBy(game.startDateTime.asc())
                 .fetch();
     }
 
