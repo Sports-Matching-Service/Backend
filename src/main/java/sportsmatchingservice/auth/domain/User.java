@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import sportsmatchingservice.game.domain.Game;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
