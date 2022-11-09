@@ -46,6 +46,9 @@ public class GamePostDto {
     @JsonProperty("gender")
     private Gender gender;
 
+    @JsonProperty("info")
+    private String info;
+
     public Game toEntity() {
         return Game.of(
                 this.sport,
@@ -56,7 +59,8 @@ public class GamePostDto {
                 this.recruitment,
                 this.minRecruitment,
                 this.fee,
-                this.gender
+                this.gender,
+                this.info
         );
     }
 }
