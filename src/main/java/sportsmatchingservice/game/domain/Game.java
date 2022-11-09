@@ -2,7 +2,6 @@ package sportsmatchingservice.game.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
@@ -69,12 +68,16 @@ public class Game {
     @Column(nullable = false)
     private Gender gender;
 
-    protected Game(Sport sport, LocalDateTime startDateTime,
-                LocalDateTime endDateTime, String address,
-                int recruitment,
-                int minRecruitment,
-                int fee,
-                Gender gender) {
+    protected Game(
+            Sport sport,
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime,
+            String address,
+            int recruitment,
+            int minRecruitment,
+            int fee,
+            Gender gender
+    ) {
         this.sport = sport;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -85,23 +88,25 @@ public class Game {
         this.gender = gender;
     }
 
-    public static Game of(Sport sport,
-                          LocalDateTime startDateTime,
-                          LocalDateTime endDateTime,
-                          String address,
-                          String addressDetail,
-                          int recruitment,
-                          int minRecruitment,
-                          int fee,
-                          Gender gender) {
-
+    public static Game of(
+            Sport sport,
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime,
+            String address,
+            String addressDetail,
+            int recruitment,
+            int minRecruitment,
+            int fee,
+            Gender gender,
+            String info
+    ) {
         Game game = new Game(sport, startDateTime, endDateTime, address, recruitment, minRecruitment, fee, gender);
 
         if (addressDetail != null) game.setAddressDetail(addressDetail);
+        if (info != null && !info.isBlank()) game.setInfo(info);
 
         return game;
     }
 
 
 }
-
