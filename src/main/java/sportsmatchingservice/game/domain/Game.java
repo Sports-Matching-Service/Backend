@@ -1,8 +1,11 @@
-package sportsmatchingservice.auth.domain;
+package sportsmatchingservice.game.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
 
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 public class Game {
 
     @Id
@@ -20,6 +24,7 @@ public class Game {
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "HOST_ID")
+    @JsonBackReference
     private User host;
 
     @Enumerated(value = EnumType.STRING)
@@ -65,12 +70,16 @@ public class Game {
     @Column(nullable = false)
     private Gender gender;
 
-    protected Game(Sport sport, LocalDateTime startDateTime,
-                LocalDateTime endDateTime, String address,
-                int recruitment,
-                int minRecruitment,
-                int fee,
-                Gender gender) {
+    protected Game(
+            Sport sport,
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime,
+            String address,
+            int recruitment,
+            int minRecruitment,
+            int fee,
+            Gender gender
+    ) {
         this.sport = sport;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -81,21 +90,25 @@ public class Game {
         this.gender = gender;
     }
 
-    public static Game of(Sport sport,
-                          LocalDateTime startDateTime,
-                          LocalDateTime endDateTime,
-                          String address,
-                          String addressDetail,
-                          int recruitment,
-                          int minRecruitment,
-                          int fee,
-                          Gender gender) {
-
+    public static Game of(
+            Sport sport,
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime,
+            String address,
+            String addressDetail,
+            int recruitment,
+            int minRecruitment,
+            int fee,
+            Gender gender,
+            String info
+    ) {
         Game game = new Game(sport, startDateTime, endDateTime, address, recruitment, minRecruitment, fee, gender);
 
         if (addressDetail != null) game.setAddressDetail(addressDetail);
+        if (info != null && !info.isBlank()) game.setInfo(info);
 
         return game;
     }
-}
 
+
+}
