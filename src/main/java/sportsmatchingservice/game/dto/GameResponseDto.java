@@ -9,7 +9,6 @@ import sportsmatchingservice.game.domain.Game;
 
 import java.time.LocalDateTime;
 
-@Setter
 @Data
 @NoArgsConstructor
 public class GameResponseDto {
