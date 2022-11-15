@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import sportsmatchingservice.game.domain.Game;
+import sportsmatchingservice.participation.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -62,7 +63,10 @@ public class User {
 
     @OneToMany(mappedBy = "host")
     @JsonManagedReference
-    private List<Game> games = new ArrayList<>();
+    private final List<Game> games = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<Participation> participations = new ArrayList<>();
 
     protected User(String email, String nickname, String phoneNumber, String password) {
         this.email = email;
