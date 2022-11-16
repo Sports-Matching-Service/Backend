@@ -1,11 +1,14 @@
 package sportsmatchingservice.auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import sportsmatchingservice.game.domain.Game;
+import sportsmatchingservice.participation.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -59,7 +62,11 @@ public class User {
     private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "host")
-    private List<Game> games = new ArrayList<>();
+    @JsonManagedReference
+    private final List<Game> games = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<Participation> participations = new ArrayList<>();
 
     protected User(String email, String nickname, String phoneNumber, String password) {
         this.email = email;

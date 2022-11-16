@@ -1,8 +1,8 @@
-package sportsmatchingservice.auth.dto;
+package sportsmatchingservice.game.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import sportsmatchingservice.auth.domain.Game;
+import sportsmatchingservice.game.domain.Game;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
 
@@ -14,6 +14,7 @@ public class GamePostDto {
     @NotNull
     @JsonProperty("sport")
     private Sport sport;
+
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startDateTime;
@@ -21,7 +22,6 @@ public class GamePostDto {
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime endDateTime;
-
 
     @NotNull
     @JsonProperty("address")
@@ -46,6 +46,9 @@ public class GamePostDto {
     @JsonProperty("gender")
     private Gender gender;
 
+    @JsonProperty("info")
+    private String info;
+
     public Game toEntity() {
         return Game.of(
                 this.sport,
@@ -56,7 +59,8 @@ public class GamePostDto {
                 this.recruitment,
                 this.minRecruitment,
                 this.fee,
-                this.gender
+                this.gender,
+                this.info
         );
     }
 }
