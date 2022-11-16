@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"game", "user"})
+})
 public class Participation {
     @Id
     @GeneratedValue
