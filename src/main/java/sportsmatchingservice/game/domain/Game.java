@@ -8,9 +8,12 @@ import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
+import sportsmatchingservice.participation.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,6 +29,9 @@ public class Game {
     @JoinColumn(nullable = false, name = "HOST_ID")
     @JsonBackReference
     private User host;
+
+    @OneToMany(mappedBy = "game")
+    private List<Participation> participations = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
