@@ -1,4 +1,4 @@
-package sportsmatchingservice.participation.controller;
+package sportsmatchingservice.game.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

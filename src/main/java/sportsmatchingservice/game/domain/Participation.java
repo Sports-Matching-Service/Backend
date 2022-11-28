@@ -1,4 +1,4 @@
-package sportsmatchingservice.participation.domain;
+package sportsmatchingservice.game.domain;
 
 
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
-import sportsmatchingservice.game.domain.Game;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
