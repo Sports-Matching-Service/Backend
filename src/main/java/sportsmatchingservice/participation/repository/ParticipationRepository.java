@@ -1,7 +1,7 @@
-package sportsmatchingservice.game.repository;
+package sportsmatchingservice.participation.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sportsmatchingservice.game.domain.Participation;
+import sportsmatchingservice.participation.domain.Participation;
 
 public interface ParticipationRepository extends JpaRepository<Participation, Long> {
 

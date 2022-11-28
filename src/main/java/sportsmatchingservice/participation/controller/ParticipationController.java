@@ -1,4 +1,4 @@
-package sportsmatchingservice.game.controller;
+package sportsmatchingservice.participation.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

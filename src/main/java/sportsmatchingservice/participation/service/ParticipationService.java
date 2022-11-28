@@ -1,4 +1,4 @@
-package sportsmatchingservice.game.service;
+package sportsmatchingservice.participation.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

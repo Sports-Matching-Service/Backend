@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
+import sportsmatchingservice.participation.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
