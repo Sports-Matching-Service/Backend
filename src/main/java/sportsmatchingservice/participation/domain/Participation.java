@@ -3,7 +3,6 @@ package sportsmatchingservice.participation.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
@@ -21,20 +20,18 @@ public class Participation {
     @GeneratedValue
     private Long id;
 
-    @Setter
     @ManyToOne
     @JoinColumn(nullable = false, name = "GAME_ID")
     private Game game;
 
-    @Setter
     @ManyToOne
     @JoinColumn(nullable = false, name = "USER_ID")
     private User user;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(nullable = false)
     private boolean isProgressed;
 
-    @Column(nullable = false, insertable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
+    @Column(nullable = false)
     @CreatedDate
     private LocalDateTime createdAt;
 
