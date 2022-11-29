@@ -33,7 +33,10 @@ public class ParticipationService {
         Participation participation = new Participation();
         String email = (String) authentication.getPrincipal();
 
-        participation.setGame(verifiedGame(gameId));
+        Game game = verifiedGame(gameId);
+        game.setCurrentRecruitment(game.getCurrentRecruitment() + 1);
+
+        participation.setGame(game);
         participation.setUser(verifiedUser(email));
 
         participationRepository.save(participation);
