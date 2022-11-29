@@ -3,6 +3,7 @@ package sportsmatchingservice.game.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
@@ -12,11 +13,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"game", "user"})
+        @UniqueConstraint(columnNames = {"game_id", "user_id"})
 })
 public class Participation {
     @Id
