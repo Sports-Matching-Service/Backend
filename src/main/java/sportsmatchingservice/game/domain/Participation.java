@@ -1,4 +1,4 @@
-package sportsmatchingservice.participation.domain;
+package sportsmatchingservice.game.domain;
 
 
 import lombok.Getter;
