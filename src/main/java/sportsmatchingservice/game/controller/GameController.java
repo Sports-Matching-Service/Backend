@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
+import sportsmatchingservice.constant.dto.ApiErrorResponse;
 import sportsmatchingservice.game.dto.GamePostDto;
 import sportsmatchingservice.game.dto.GameResponseDto;
 import sportsmatchingservice.game.service.GameService;
@@ -22,9 +23,11 @@ import java.util.List;
 public class GameController {
 
     private final GameService gameService;
+    private final ParticipationService participationService;
 
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, ParticipationService participationService) {
         this.gameService = gameService;
+        this.participationService = participationService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,6 +55,22 @@ public class GameController {
             return ApiDataResponse.of(ErrorCode.OK, gameResponseDtos);
         } catch (Exception e) {
             return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, null);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{gameId}/participations/{participationId}")
+    public ApiDataResponse deleteParticipation(@PathVariable Long gameId,
+                                               @PathVariable Long participationId
+    ) {
+        try {
+            boolean isSuccess = participationService.deleteParticipation(gameId, participationId);
+            if (isSuccess) {
+                return ApiDataResponse.of(ErrorCode.OK, null);
+            }
+            return ApiDataResponse.of(ErrorCode.NOT_FOUND, null);
+        } catch (RuntimeException e) {
+            return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, e.getMessage());
         }
     }
 
