@@ -11,6 +11,7 @@ import sportsmatchingservice.game.dto.GameResponseDto;
 import sportsmatchingservice.game.service.GameService;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
+import sportsmatchingservice.game.service.ParticipationService;
 
 import java.time.LocalDate;
 import java.util.List;

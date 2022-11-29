@@ -8,7 +8,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import sportsmatchingservice.game.domain.Game;
-import sportsmatchingservice.participation.domain.Participation;
+import sportsmatchingservice.game.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
