@@ -2,6 +2,8 @@ package sportsmatchingservice.game.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sportsmatchingservice.constant.ErrorCode;
+import sportsmatchingservice.exceptions.exception.GeneralException;
 import sportsmatchingservice.game.domain.Game;
 import sportsmatchingservice.game.domain.Participation;
 import sportsmatchingservice.game.repository.GameRepository;
@@ -36,10 +38,10 @@ public class ParticipationService {
             Game game = optionalGame.get();
 
             if (!participation.getGame().equals(game)) {
-                throw new RuntimeException("일치하는 참여 기록이 존재하지 않습니다.");
+                throw new GeneralException(ErrorCode.NOT_FOUND, null);
             }
             if (game.getStartDateTime().minusHours(1).isBefore(LocalDateTime.now())) {
-                throw new RuntimeException("해당 경기 참여를 취소할 수 없습니다.");
+                throw new GeneralException(ErrorCode.NOT_ALLOWED, null);
             }
             game.setCurrentRecruitment(game.getCurrentRecruitment()-1);
             participation.setDeletedAt(LocalDateTime.now());

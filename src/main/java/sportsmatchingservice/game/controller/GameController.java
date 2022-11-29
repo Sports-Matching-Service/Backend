@@ -63,15 +63,11 @@ public class GameController {
     public ApiDataResponse deleteParticipation(@PathVariable Long gameId,
                                                @PathVariable Long participationId
     ) {
-        try {
-            boolean isSuccess = participationService.deleteParticipation(gameId, participationId);
-            if (isSuccess) {
-                return ApiDataResponse.of(ErrorCode.OK, null);
+        boolean isSuccess = participationService.deleteParticipation(gameId, participationId);
+        if (isSuccess) {
+            return ApiDataResponse.of(ErrorCode.OK, null);
             }
-            return ApiDataResponse.of(ErrorCode.NOT_FOUND, null);
-        } catch (RuntimeException e) {
-            return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, e.getMessage());
-        }
+        return ApiDataResponse.of(ErrorCode.NOT_FOUND, null);
     }
 
 }
