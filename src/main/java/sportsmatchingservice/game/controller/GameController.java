@@ -58,17 +58,7 @@ public class GameController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{gameId}/participations/{participationId}")
-    public ApiDataResponse deleteParticipation(@PathVariable Long gameId,
-                                               @PathVariable Long participationId
-    ) {
-        boolean isSuccess = participationService.deleteParticipation(gameId, participationId);
-        if (isSuccess) {
-            return ApiDataResponse.of(ErrorCode.OK, null);
-            }
-        return ApiDataResponse.of(ErrorCode.NOT_FOUND, null);
-    }
+
 
 }
 
