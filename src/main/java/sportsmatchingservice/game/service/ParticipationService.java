@@ -58,27 +58,26 @@ public class ParticipationService {
         return user.orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND, new Exception()));
     }
 
+    public Participation verifiedParticipation(Long participationId) {
+        Optional<Participation> participation = participationRepository.findById(participationId);
+
+        return participation.orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND, new Exception()));
+    }
+
     public boolean deleteParticipation(Long gameId, Long participationId) {
-        Optional<Participation> optionalParticipation
-                = participationRepository.findById(participationId);
-        Optional<Game> optionalGame = gameRepository.findById(gameId);
+        Participation participation = verifiedParticipation(participationId);
+        Game game = verifiedGame(gameId);
 
-        if (optionalParticipation.isPresent() && optionalGame.isPresent()) {
-            Participation participation = optionalParticipation.get();
-            Game game = optionalGame.get();
-
-            if (!participation.getGame().equals(game)) {
-                throw new GeneralException(ErrorCode.NOT_FOUND, null);
-            }
-            if (game.getStartDateTime().minusHours(1).isBefore(LocalDateTime.now())) {
-                throw new GeneralException(ErrorCode.NOT_ALLOWED, null);
-            }
-            game.setCurrentRecruitment(game.getCurrentRecruitment()-1);
-            participation.setDeletedAt(LocalDateTime.now());
-            gameRepository.save(game);
-            participationRepository.save(participation);
-            return true;
+        if (!participation.getGame().equals(game)) {
+            throw new GeneralException(ErrorCode.NOT_FOUND, null);
         }
-        return false;
+        if (game.getStartDateTime().minusHours(1).isBefore(LocalDateTime.now())) {
+            throw new GeneralException(ErrorCode.NOT_ALLOWED, null);
+        }
+        game.setCurrentRecruitment(game.getCurrentRecruitment()-1);
+        participation.setDeletedAt(LocalDateTime.now());
+        gameRepository.save(game);
+        participationRepository.save(participation);
+        return true;
     }
 }
