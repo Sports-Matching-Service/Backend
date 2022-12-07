@@ -15,13 +15,12 @@ public enum ErrorCode {
     CREATED(201, HttpStatus.CREATED, "Created"),
 
     BAD_REQUEST(400, HttpStatus.BAD_REQUEST, "Bad Request"),
-    NOT_FOUND(403, HttpStatus.NOT_FOUND,"Not Found"),
+    UNAUTHORIZED(401, HttpStatus.UNAUTHORIZED, "Unauthorized"),
+    FORBIDDEN(403, HttpStatus.FORBIDDEN, "Forbidden"),
+    NOT_FOUND(404, HttpStatus.NOT_FOUND,"Not Found"),
+    NOT_ALLOWED(405, HttpStatus.METHOD_NOT_ALLOWED, "Not Allowed"),
 
     INTERNAL_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server Error"),
-
-    UNAUTHORIZED(401, HttpStatus.UNAUTHORIZED, "Unauthorized"),
-
-    FORBIDDEN(403, HttpStatus.FORBIDDEN, "Forbidden")
     ;
 
     private final Integer code;

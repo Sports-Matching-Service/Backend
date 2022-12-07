@@ -12,11 +12,13 @@ import sportsmatchingservice.game.domain.Participation;
 import sportsmatchingservice.game.repository.GameRepository;
 import sportsmatchingservice.game.repository.ParticipationRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Transactional
 @Service
 public class ParticipationService {
+
     private final ParticipationRepository participationRepository;
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
@@ -54,5 +56,28 @@ public class ParticipationService {
         Optional<User> user = userRepository.findByEmail(email);
 
         return user.orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND, new Exception()));
+    }
+
+    public Participation verifiedParticipation(Long participationId) {
+        Optional<Participation> participation = participationRepository.findById(participationId);
+
+        return participation.orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND, new Exception()));
+    }
+
+    public boolean deleteParticipation(Long gameId, Long participationId) {
+        Participation participation = verifiedParticipation(participationId);
+        Game game = verifiedGame(gameId);
+
+        if (!participation.getGame().equals(game)) {
+            throw new GeneralException(ErrorCode.NOT_FOUND, null);
+        }
+        if (game.getStartDateTime().minusHours(1).isBefore(LocalDateTime.now())) {
+            throw new GeneralException(ErrorCode.NOT_ALLOWED, null);
+        }
+        game.setCurrentRecruitment(game.getCurrentRecruitment()-1);
+        participation.setDeletedAt(LocalDateTime.now());
+        gameRepository.save(game);
+        participationRepository.save(participation);
+        return true;
     }
 }

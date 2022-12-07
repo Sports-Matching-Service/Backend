@@ -12,9 +12,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"game_id", "user_id"})
+})
 public class Participation {
     @Id
     @GeneratedValue

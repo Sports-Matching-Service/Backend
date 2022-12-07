@@ -6,11 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import sportsmatchingservice.constant.Gender;
 import sportsmatchingservice.constant.Sport;
+import sportsmatchingservice.constant.dto.ApiErrorResponse;
 import sportsmatchingservice.game.dto.GamePostDto;
 import sportsmatchingservice.game.dto.GameResponseDto;
 import sportsmatchingservice.game.service.GameService;
 import sportsmatchingservice.constant.ErrorCode;
 import sportsmatchingservice.constant.dto.ApiDataResponse;
+import sportsmatchingservice.game.service.ParticipationService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,9 +23,11 @@ import java.util.List;
 public class GameController {
 
     private final GameService gameService;
+    private final ParticipationService participationService;
 
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, ParticipationService participationService) {
         this.gameService = gameService;
+        this.participationService = participationService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,6 +57,8 @@ public class GameController {
             return ApiDataResponse.of(ErrorCode.INTERNAL_ERROR, null);
         }
     }
+
+
 
 }
 
