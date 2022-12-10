@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 import sportsmatchingservice.constant.PaymentStatus;
 import sportsmatchingservice.constant.Sport;
+import sportsmatchingservice.game.domain.Participation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,10 @@ public class Payment {
     @Id
     @GeneratedValue
     private String partnerOrderId;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "PARTICIPATION_ID")
+    private Participation participation;
 
     @Column(nullable = false)
     private String partnerUserId;
@@ -43,10 +48,12 @@ public class Payment {
     @Column
     private String aid;
 
-    @Column
+    @OneToOne
+    @JoinColumn(name = "AMOUNT_ID")
     private Amount amount;
 
-    @Column
+    @OneToOne
+    @JoinColumn(name = "CARD_INFO_ID")
     private CardInfo cardInfo;
 
     @Column
@@ -61,7 +68,7 @@ public class Payment {
     @Column
     private LocalDateTime canceledAt;
 
-    @Column(nullable = false, insertable = false,
+    @Column(nullable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     @LastModifiedDate
     private LocalDateTime modifiedAt;
