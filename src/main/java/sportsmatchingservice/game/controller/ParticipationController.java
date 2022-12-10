@@ -8,7 +8,7 @@ import sportsmatchingservice.constant.dto.ApiDataResponse;
 import sportsmatchingservice.game.service.ParticipationService;
 
 @RestController
-@RequestMapping("/games/{game-id}/participate")
+@RequestMapping("/games/{game-id}/participations")
 public class ParticipationController {
     private final ParticipationService participationService;
 
@@ -29,7 +29,7 @@ public class ParticipationController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{game-id}/participations/{participation-id}")
+    @DeleteMapping("/{participation-id}")
     public ApiDataResponse deleteParticipation(
             @PathVariable(value = "game-id") Long gameId,
             @PathVariable(value = "participation-id") Long participationId
