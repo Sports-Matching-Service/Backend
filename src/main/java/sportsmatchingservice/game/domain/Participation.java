@@ -7,9 +7,12 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import sportsmatchingservice.auth.domain.User;
+import sportsmatchingservice.payment.domain.Payment;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +36,9 @@ public class Participation {
     @ManyToOne
     @JoinColumn(nullable = false, name = "USER_ID")
     private User user;
+
+    @OneToMany(mappedBy = "participation")
+    private List<Payment> payments = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isProgressed;
